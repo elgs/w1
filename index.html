@@ -8,12 +8,40 @@
     <title></title>
 </head>
 <body ng-controller="ListController">
-<main-header></main-header>
-<div class="container-fluid">
-    <ul class="list-group">
-        <a href="#" class="list-group-item" data-ng-repeat="item in list">{{item.client}}</a>
-    </ul>
+<!--<main-header></main-header>-->
+<!--<div class="container-fluid">-->
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default" data-ng-repeat="item in list">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{item.client}}">
+                    {{item.client}}
+                </a>
+            </h4>
+        </div>
+        <div id="{{item.client}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <form class="form-inline" role="form"
+                      data-ng-submit="submit(item.id, item.client, item.secret, item.class)">
+                    <div class="form-group">
+                        <label class="sr-only" for="username_{{item.id}}">Username</label>
+                        <input type="text" class="form-control" id="username_{{item.id}}"
+                               value="{{item.client}}" placeholder="Username" data-ng-model="item.client">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="password_{{item.id}}">Password</label>
+                        <input type="password" class="form-control" id="password_{{item.id}}"
+                               placeholder="Password" data-ng-model="item.secret">
+                    </div>
+                    <input type="hidden" data-ng-model="item.id">
+                    <button type="submit" class="btn btn-default">Save</button>
+                    <div class="{{item.class}}" role="alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+<!--</div>-->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
